@@ -4,6 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongodb = require('mongodb');
+var mongoose = require('mongoose');
+var passport = require('passport');
+
+require('./models/Polls');
+require('./models/Users');
+require('./config/passport');
+
+//mongoose.connect(process.env.MONGOLAB_URI)
+mongoose.connect('mongodb://localhost/vote') //Local testing DB path
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/users', users);
