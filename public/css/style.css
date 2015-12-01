@@ -1,0 +1,208 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a:active {
+    color: white;
+    text-decoration: none;
+}
+
+.active {
+    text-decoration: overline;
+    color: blue;
+}
+
+.header {
+    width:100%;
+    background-color:#000;
+    color:#fff;
+    margin: 0;
+}
+
+.pageContainer {
+    min-height: 100%;
+}
+
+.pageTitle {
+    color: white;
+    font-size: 20px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.headButton {
+    color: white;
+    padding: 0px;
+    padding-top: 14px;
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.mainContent {
+    background-color: #414242;
+    margin: 0px;
+    margin-bottom: 20px;
+}
+
+.clickMe {
+    cursor: pointer;
+}
+
+.iGraph {
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.mainContent h1 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    margin: 0px;
+}
+
+.mainContent h2 {
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    margin: 0px;
+    padding-bottom: 10px;
+}
+
+
+.voteButtonWrap {
+    margin: 0 auto;
+    width: 220px;
+    height: 45px;
+}
+
+.voteButtonWrap .register {
+    float: left;
+}
+
+.voteButtonWrap .logIn {
+    float: right;
+}
+
+.voteButton {
+    width: 100px;
+    height: 30px;
+    border-style: solid;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    border-width: 1px;
+    padding-top: 4px;
+}
+
+.buttonContainer {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 100px;
+}
+
+.navButton {
+    text-align: center;
+}
+
+.graphStyle {
+    font-size: 125px;
+    color: #414242;
+}
+
+.formContainer {
+    width: 350px;
+    margin: auto;
+    text-align: center;
+    border-style: solid;
+    border-radius: 20px;
+    padding-bottom: 10px;
+}
+
+.formContainer h2 {
+    background: gray;
+    margin: 0px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom: 2px solid;
+    margin-bottom: 10px;
+}
+
+.formContainer h3 {
+    margin: 0px auto;
+    padding: 0px;
+}
+
+.formContainer input {
+    margin: 10px;
+    width: 250px
+}
+
+.formContainer button {
+    margin: 10px;
+}
+
+.footer {
+    position: relative;
+    margin-top: -100px;
+    height: 100px;
+    clear: both;
+    border-top: 1px solid #1A1A1A;
+    text-align: center;
+    padding-top: 25px;
+}
+
+.animate-enter, 
+.animate-leave
+{ 
+    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.animate-enter {
+    top: -100%;
+}
+.animate-enter.animate-enter-active {
+    top: 0;
+}
+ 
+.animate-leave {
+    top: 0;
+}
+
+.loginButton {
+    color: white;
+    background-color: cornflowerblue;
+    text-align: center;
+    width: 250px;
+    font-size: 20px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.pollCreate {
+    text-align: center;
+}

@@ -1,0 +1,13 @@
+<div class = "formContainer" ng-controller = "NewPollCtrl">
+    <h2>Create A Poll</h2>
+    <form ng-submit = "addPoll()">
+        <h3>Question:</h3>
+        <input type = "text" placeholder = "Poll Question" ng-model = "question"></input>
+        <div style = "width: 100%; border: 1px solid; margin-bottom: 5px"></div>
+        <h3>Answers:</h3>
+        <input type = "text" placeholder = "Answer 1" ng-model = "ans1"></input>
+        <input type = "text" placeholder = "Answer 2" ng-model = "ans2"></input><br>
+        <input type = "submit" value = "Submit"></button><br>
+        <span style = "color: red">{{error}}</span>
+    </form>
+</div>
