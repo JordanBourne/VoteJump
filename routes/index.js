@@ -31,4 +31,25 @@ router.post('/polls', function (req, res, next) {
     });
 });
 
+router.param('poll', function(req, res, next, id) {
+  var query = Poll.findById(id);
+
+  query.exec(function (err, poll){
+    if (err) { return next(err); }
+    if (!poll) { return next(new Error('can\'t find poll')); }
+
+    req.poll = poll;
+    return next();
+  });
+});
+
+router.get('/polls/:poll', function(req, res) {
+    /*req.poll.populate('answers', function(err, poll) {
+        console.log(poll);
+        res.json(poll);
+    });*/
+    console.log(req.poll);
+    res.json(req.poll);
+});
+
 module.exports = router;

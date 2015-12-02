@@ -8,12 +8,12 @@ app.config([
         $stateProvider
             .state('home', {
                 url: '/home',
-                templateUrl: './home.html'
+                templateUrl: '/home.html'
             })
         
             .state('polls', {
                 url: '/polls',
-                templateUrl: './polls.html',
+                templateUrl: '/polls.html',
                 controller: 'PollListCtrl',
                 resolve: {
                     postPromise: ['polls', function (polls) {
@@ -24,25 +24,30 @@ app.config([
         
             .state('thePoll', {
                 url: '/polls/{id}',
-                templateUrl: './thePoll.html',
-                controller: 'thePollCtrl'
+                templateUrl: '/thePoll.html',
+                controller: 'thePollCtrl',
+                resolve: {
+                    poll: ['$stateParams', 'polls', function($stateParams, polls) {
+                        return polls.get($stateParams.id);
+                    }]
+                }
             })
         
             .state('newpoll', {
                 url: '/newpoll',
-                templateUrl: './newpoll.html',
+                templateUrl: '/newpoll.html',
                 controller: 'NewPollCtrl'
             })
         
             .state('login', {
                 url: '/login',
-                templateUrl: './login.html'
+                templateUrl: '/login.html'
             })
         
         
             .state('register', {
                 url: '/register',
-                templateUrl: './register.html'
+                templateUrl: '/register.html'
             });
         
         $urlRouterProvider.otherwise('home');
@@ -56,16 +61,23 @@ app.factory('polls', ['$http', function ($http) {
     
     
     o.getAll = function () {
-        console.log("getall");
-        return $http.get('/polls').success(function(data) {
+        return $http.get('/polls').success(function (data) {
             angular.copy(data, o.polls);
         });
     };
     
     o.create = function (poll) {
-        return $http.post('/polls', poll).success(function(data) {
+        return $http.post('/polls', poll).success(function (data) {
             o.polls.push(data);
-        })
+        });
+    };
+    
+    o.get = function(id) {
+        return $http.get('/polls/' + id).then(function (res) {
+            poll = res.data;
+            console.log(res.data);
+            return poll;
+        });
     };
     
     return o;
@@ -82,7 +94,7 @@ app.controller('NewPollCtrl', [
                 $scope.error = "You didn't ask a question!";
                 return;
             }
-            if (!$scope.ans1 || !$scope.ans2 || $scope.ans1 == '' || $scope.ans2 == '') {
+            if (!$scope.ans1 || !$scope.ans2 || $scope.ans1 === '' || $scope.ans2 === '') {
                 $scope.error = 'One or more answers are blank.';
                 return;
             }
@@ -91,7 +103,7 @@ app.controller('NewPollCtrl', [
                 question: $scope.question,
                 answers: [
                     $scope.ans1,
-                    $scope.ans2],
+                    $scope.ans2]
             });
             $scope.question = '';
             $scope.ans1 = '';
@@ -111,10 +123,9 @@ app.controller('PollListCtrl', [
 
 app.controller('thePollCtrl', [
     '$scope',
+    '$stateParams',
     'polls',
-    'poll',
-    function ($scope, polls, poll) {
-        
-        $scope.test = "test";
+    'post',
+    function ($scope, $stateParams, polls, post) {
     }
 ]);
