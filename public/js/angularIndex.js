@@ -14,7 +14,18 @@ app.config([
             .state('polls', {
                 url: '/polls',
                 templateUrl: './polls.html',
-                controller: 'PollListCtrl'
+                controller: 'PollListCtrl',
+                resolve: {
+                    postPromise: ['polls', function (polls) {
+                        return polls.getAll();
+                    }]
+                }
+            })
+        
+            .state('thePoll', {
+                url: '/polls/{id}',
+                templateUrl: './thePoll.html',
+                controller: 'thePollCtrl'
             })
         
             .state('newpoll', {
@@ -38,13 +49,23 @@ app.config([
     }
 ]);
 
-app.factory('polls', [function () {
+app.factory('polls', ['$http', function ($http) {
     var o = {
         polls: []
     };
     
+    
+    o.getAll = function () {
+        console.log("getall");
+        return $http.get('/polls').success(function(data) {
+            angular.copy(data, o.polls);
+        });
+    };
+    
     o.create = function (poll) {
-        o.polls.push(poll);
+        return $http.post('/polls', poll).success(function(data) {
+            o.polls.push(data);
+        })
     };
     
     return o;
@@ -70,7 +91,7 @@ app.controller('NewPollCtrl', [
                 question: $scope.question,
                 answers: [
                     $scope.ans1,
-                    $scope.ans2]
+                    $scope.ans2],
             });
             $scope.question = '';
             $scope.ans1 = '';
@@ -84,10 +105,16 @@ app.controller('PollListCtrl', [
     '$scope',
     'polls',
     function ($scope, polls) {
-        $scope.polls = [
-            'poll 1',
-            'poll 2',
-            'poll 3'
-        ];
+        $scope.polls = polls.polls;
+    }
+]);
+
+app.controller('thePollCtrl', [
+    '$scope',
+    'polls',
+    'poll',
+    function ($scope, polls, poll) {
+        
+        $scope.test = "test";
     }
 ]);

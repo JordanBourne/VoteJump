@@ -2,6 +2,6 @@
     <h2>View Polls</h2>
 
     <div ng-repeat = "poll in polls">
-        {{poll}}
+        <a href = "#/polls/{{poll._id}}">{{poll.question}}</a>
     </div>
 </div>
