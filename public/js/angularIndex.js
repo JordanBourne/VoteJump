@@ -74,9 +74,8 @@ app.factory('polls', ['$http', function ($http) {
     
     o.get = function(id) {
         return $http.get('/polls/' + id).then(function (res) {
-            poll = res.data;
             console.log(res.data);
-            return poll;
+            return res.data;
         });
     };
     
@@ -125,7 +124,7 @@ app.controller('thePollCtrl', [
     '$scope',
     '$stateParams',
     'polls',
-    'post',
-    function ($scope, $stateParams, polls, post) {
+    'poll',
+    function ($scope, $stateParams, polls, poll) {
     }
 ]);
