@@ -13,6 +13,41 @@ var passport = require('passport');
 var Poll = mongoose.model('Poll');
 var User = mongoose.model('User');
 
+router.post('/register', function(req, res, next){
+    if(!req.body.username || !req.body.password){
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
+    var user = new User();
+
+    user.username = req.body.username;
+
+    user.setPassword(req.body.password);
+    
+    user.save(function (err){
+        if(err){ return next(err); }
+
+        return res.json({token: user.generateJWT()})
+    });
+});
+
+router.post('/login', function(req, res, next){
+    if(!req.body.username || !req.body.password){
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+    
+    passport.authenticate('local', function(err, user, info){
+        if(err){ return next(err); }
+    
+        if(user){
+            return res.json({token: user.generateJWT()});
+        } else {
+            return res.status(401).json(info);
+        }
+    })(req, res, next);
+});
+
+
 router.get('/polls', function (req, res, next) {
     Poll.find(function (err, polls) {
         if (err) { next(err) }
@@ -21,8 +56,9 @@ router.get('/polls', function (req, res, next) {
     });
 });
 
-router.post('/polls', function (req, res, next) {
+router.post('/polls', auth, function (req, res, next) {
     var poll = new Poll(req.body);
+    post.author = req.payload.username;
     
     poll.save(function (err, poll) {
         if (err) { return next(err) }
@@ -47,7 +83,7 @@ router.get('/polls/:poll', function(req, res) {
     res.json(req.poll);
 });
 
-router.put('/polls/:poll/:vote', function(req, res, next) {
+router.put('/polls/:poll/:vote', auth, function(req, res, next) {
     var vote = req.params.vote;
     req.poll.upvote(vote, function(err, poll) {
         if(err) { return next(err); }

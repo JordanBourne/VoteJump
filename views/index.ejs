@@ -15,17 +15,17 @@
 <div class = "pageContainer">
     <section>
     <div class = "mainContent">
-        <div class = "header row">
-            <nav-bar></nav-bar>
+        <div class = "header row" ng-controller="NavCtrl">
             <div class = "pageTitle col-xs-1 col-xs-offset-2">VoteCaster</div>
             <div class = "headButton col-xs-1 col-xs-offset-4"><a href = "#/home">Home</a></div>
-            <div class = "headButton col-xs-1"><a href  = "#/register">Register</a></div>
-            <div class = "headButton col-xs-1"><a href  = "#/login">Log In</a></div>
+            <div ng-hide = "isLoggedIn()" class = "headButton col-xs-1"><a href  = "#/register">Register</a></div>
+            <div ng-hide = "isLoggedIn()" class = "headButton col-xs-1"><a href  = "#/login">Log In</a></div>
+            <div ng-show = "isLoggedIn()" class = "headButton col-xs-1"><a href  = "#/profile">Profile</a></div>
+            <div ng-show = "isLoggedIn()" class = "headButton col-xs-1"><a href  = "" ng-click = "logOut()">Log Out</a></div>
         </div>
-        <section ng-click = "tab.setTab(1)" class = "clickMe"><img src = "images/mygraph.png" class = "iGraph">
+        <section ng-click = "tab.setTab(1)"><img src = "images/mygraph.png" class = "iGraph">
         <h1>VoteCaster</h1>
         <h2>Live polls you can share!</h2></section>
-        <banner-buttons></banner-buttons>
         <div class = "voteButtonWrap">
             <a href = "#/polls"><div class="register voteButton">View Polls</div></a>
             <a href = "#/newpoll"><div class="logIn voteButton">New Poll</div></a>
