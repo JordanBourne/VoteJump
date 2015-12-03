@@ -47,6 +47,13 @@ router.get('/polls/:poll', function(req, res) {
     res.json(req.poll);
 });
 
-//router.put('/polls/:poll/' + val, )
+router.put('/polls/:poll/:vote', function(req, res, next) {
+    var vote = req.params.vote;
+    req.poll.upvote(vote, function(err, poll) {
+        if(err) { return next(err); }
+        
+        res.json(poll);
+    });
+});
 
 module.exports = router;

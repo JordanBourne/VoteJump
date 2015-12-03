@@ -4,8 +4,8 @@
         <div ng-repeat = "answer in answers">
             <input type = "radio" name = "choice" ng-model = "$parent.radioValue" id = "{{$index}}" value = "{{$index}}">
             <label for="{{$index}}"><span><span></span></span>{{answer.option}}</label>
-        </ng-repeat>
-        </div>
-        <input type = "submit" value = "Submit"></input><br>
-    </form>
+        </div><br>
+        <input type = "submit" value = "Submit" id = "submitAnswer"></input><br>
+    </form><br>
+    <a href = "#/polls/{{poll._id}}/results">View Results</a>
 </div>
