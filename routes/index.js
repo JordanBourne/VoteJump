@@ -44,12 +44,9 @@ router.param('poll', function(req, res, next, id) {
 });
 
 router.get('/polls/:poll', function(req, res) {
-    /*req.poll.populate('answers', function(err, poll) {
-        console.log(poll);
-        res.json(poll);
-    });*/
-    console.log(req.poll);
     res.json(req.poll);
 });
+
+//router.put('/polls/:poll/' + val, )
 
 module.exports = router;

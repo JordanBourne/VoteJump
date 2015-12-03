@@ -153,7 +153,7 @@ a:active {
     padding: 0px;
 }
 
-.formContainer input {
+.formContainer input[type = text] {
     margin: 10px;
     width: 250px
 }
@@ -176,23 +176,6 @@ a:active {
     color: black;
     text-decoration: none;
 }
-
-.animate-enter, 
-.animate-leave
-{ 
-    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-} 
- 
-.animate-enter {
-    top: -100%;
-}
-.animate-enter.animate-enter-active {
-    top: 0;
-}
  
 .animate-leave {
     top: 0;
@@ -210,4 +193,44 @@ a:active {
 
 .pollCreate {
     text-align: center;
+}
+
+.voteOption {
+    margin: 0px auto;
+    padding-bottom: 5px;
+}
+
+input[type=radio]{
+  width     : 20px;
+  margin    : 0;
+  padding   : 0;
+  font-size : 5px;
+  opacity   : 0;
+}
+
+input[type=radio] + label{
+  display      : inline-block;
+  margin-left  : -2em;
+  line-height  : 1.4em;
+}
+
+input[type=radio] + label > span{
+  display          : inline-block;
+  width            : 15px;
+  height           : 15px;
+  margin           : 0.25em 0.5em 0.25em 0.25em;
+  border           : 0.0625em solid rgb(192,192,192);
+  border-radius    : 0.25em;
+  background       : rgb(224,224,224);
+  vertical-align   : bottom;
+}
+
+input[type=radio]:checked +  label > span > span{
+  display          : block;
+  width            : 9px;
+  height           : 9px;
+  margin           : 3px;
+  border           : 0.0625em solid rgb(0,0,0);
+  border-radius    : 3px;
+  background       : rgb(34,34,34);
 }

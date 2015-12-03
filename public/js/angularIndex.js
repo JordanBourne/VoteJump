@@ -27,7 +27,7 @@ app.config([
                 templateUrl: '/thePoll.html',
                 controller: 'thePollCtrl',
                 resolve: {
-                    poll: ['$stateParams', 'polls', function($stateParams, polls) {
+                    poll: ['$stateParams', 'polls', function ($stateParams, polls) {
                         return polls.get($stateParams.id);
                     }]
                 }
@@ -72,10 +72,16 @@ app.factory('polls', ['$http', function ($http) {
         });
     };
     
-    o.get = function(id) {
+    o.get = function (id) {
         return $http.get('/polls/' + id).then(function (res) {
-            console.log(res.data);
             return res.data;
+        });
+    };
+    
+    o.voteFor = function(post, val) {
+        return $http.put('/polls/' + post._id).success(function(data){
+            post.answers[val].votes += 1;
+            console.log(post.answers[val].votes);
         });
     };
     
@@ -101,9 +107,9 @@ app.controller('NewPollCtrl', [
             polls.create({
                 question: $scope.question,
                 answers: [
-                    $scope.ans1,
-                    $scope.ans2]
-            });
+                    {option: $scope.ans1, votes: 0},
+                    {option: $scope.ans2, votes: 0}
+            ]});
             $scope.question = '';
             $scope.ans1 = '';
             $scope.ans2 = '';
@@ -122,9 +128,18 @@ app.controller('PollListCtrl', [
 
 app.controller('thePollCtrl', [
     '$scope',
-    '$stateParams',
     'polls',
     'poll',
-    function ($scope, $stateParams, polls, poll) {
+    function ($scope, polls, poll) {
+        $scope.poll = poll;
+        $scope.answers = poll.answers;
+        
+        $scope.list = [1,2,3,4,5];
+        
+        $scope.vote = function() {
+            var val = $scope.radioValue;
+            
+            polls.voteFor(poll, val);
+        }
     }
 ]);
