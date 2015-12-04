@@ -4,7 +4,12 @@ html, body {
     margin: 0;
 }
 
-a {
+div {
+    margin: 0;
+    padding: 0;
+}
+
+a  {
     color: white;
     text-decoration: none;
 }
@@ -131,16 +136,18 @@ a:active {
 }
 
 .formContainer {
-    width: 350px;
+    width: 400px;
     margin: auto;
     text-align: center;
-    border-style: solid;
-    border-radius: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.formContainer a:hover {
+    padding-top: 20px;
+    color: blue;
 }
 
 .formContainer h2 {
-    background: gray;
     margin: 0px;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -148,14 +155,14 @@ a:active {
     margin-bottom: 10px;
 }
 
+.formSpacer {
+    height: 125px;
+}
+
 .formContainer h3 {
     margin: 0px auto;
     padding: 0px;
-}
-
-.formContainer input {
-    margin: 10px;
-    width: 250px
+    margin-bottom: 5px;
 }
 
 .formContainer button {
@@ -170,15 +177,12 @@ a:active {
     border-top: 1px solid #1A1A1A;
     text-align: center;
     padding-top: 25px;
+    float: bottom;
 }
 
 .formContainer a, .formContainer a:hover, .formContainer a:visited {
-    color: black;
+    color: #1A1A1A;
     text-decoration: none;
-}
- 
-.animate-leave {
-    top: 0;
 }
 
 .loginButton {
@@ -200,37 +204,89 @@ a:active {
     padding-bottom: 5px;
 }
 
-input[type=radio]{
-  width     : 20px;
-  margin    : 0;
-  padding   : 0;
-  font-size : 5px;
-  opacity   : 0;
+.yourPolls {
+    padding-bottom: 15px;
+    font-size: 25px;
 }
 
-input[type=radio] + label{
-  display      : inline-block;
-  margin-left  : -2em;
-  line-height  : 1.4em;
+.deletePoll {
+    position: absolute;
+    top: 7px;
+    right: 0px;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 25px;
 }
 
-input[type=radio] + label > span{
-  display          : inline-block;
-  width            : 15px;
-  height           : 15px;
-  margin           : 0.25em 0.5em 0.25em 0.25em;
-  border           : 0.0625em solid rgb(192,192,192);
-  border-radius    : 0.25em;
-  background       : rgb(224,224,224);
-  vertical-align   : bottom;
+.yourPollList {
+    width: 150px;
+    border: 2px solid;
+    margin: auto;
 }
 
-input[type=radio]:checked +  label > span > span{
-  display          : block;
-  width            : 9px;
-  height           : 9px;
-  margin           : 3px;
-  border           : 0.0625em solid rgb(0,0,0);
-  border-radius    : 3px;
-  background       : rgb(34,34,34);
+.thisOption, .outline {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    padding: 7px;
+    width: 280px !important;
+    margin: auto;
+    margin: 2px;
+    font-size: 20px;
+    border: 1px solid #777777;
+}
+.thisOption:hover {
+    border-color: #FF8300;
+    color: #FF8300;
+}
+
+.activeOption {
+    border-color: #FF8300;
+    color: #FF8300;
+}
+
+.smallOutline {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    padding: 3px;
+    width: 136px !important;
+    margin: auto;
+    margin: 2px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+}
+
+.moreOptions {
+    background-color: #3E66BC;
+    border: 1px solid #3E66BC;
+}
+
+.submitPoll {
+    background-color: #3AD14D;
+    border: 1px solid #3AD14D;
+}
+
+.moreOptions:hover {
+    color: #3E66BC;
+    background-color: white;
+}
+
+.submitPoll:hover {
+    color: #3AD14D;
+    background-color: white;
+}
+
+.viewResults {
+    background-color: #FF8300;
+    border: 1px solid #FF8300;
+}
+
+.viewResults:hover {
+    color: #FF8300;
+    background-color: white;
 }

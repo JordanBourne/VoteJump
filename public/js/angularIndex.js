@@ -73,6 +73,22 @@ app.config([
                 }]
             })
         
+            .state('profile', {
+                url: '/profile',
+                templateUrl: '/profile.html',
+                controller: 'ProfileCtrl',
+                onEnter: ['$state', 'auth', function($state, auth) {
+                    if (!auth.isLoggedIn()) {
+                        $state.go('home');
+                    }
+                }],
+                resolve: {
+                    postPromise: ['polls', 'auth', function (polls, auth) {
+                        return polls.getSome(auth.currentUser());
+                    }]
+                }
+            })
+        
         $urlRouterProvider.otherwise('home');
     }
 ]);
@@ -129,7 +145,7 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
-app.factory('polls', ['$http', function ($http) {
+app.factory('polls', ['$http', 'auth', function ($http, auth) {
     var o = {
         polls: []
     };
@@ -139,10 +155,18 @@ app.factory('polls', ['$http', function ($http) {
         return $http.get('/polls').success(function (data) {
             angular.copy(data, o.polls);
         });
+    };   
+    
+    o.getSome = function (username) {
+        return $http.get('/polls/author/' + username).success(function (data) {
+            angular.copy(data, o.polls);
+        });
     };
     
     o.create = function (poll) {
-        return $http.post('/polls', poll).success(function (data) {
+        return $http.post('/polls', poll, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function (data) {
             o.polls.push(data);
             
             window.location.href = "#/polls/" + data._id;
@@ -155,10 +179,19 @@ app.factory('polls', ['$http', function ($http) {
         });
     };
     
-    o.voteFor = function(post, val) {
-        return $http.put('/polls/' + post._id + '/' + val).success(function(data){
-            post.answers[val].votes += 1;
+    o.voteFor = function(poll, val) {
+        return $http.put('/polls/' + poll._id + '/' + val, null, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data){
+            poll.answers[val].votes += 1;
+            window.location.href = "#/polls/" + poll._id + "/results";
         });
+    };
+    
+    o.delete = function(poll) {
+        return $http.delete('/polls/' + poll._id, null, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        })
     };
     
     return o;
@@ -167,25 +200,43 @@ app.factory('polls', ['$http', function ($http) {
 app.controller('NewPollCtrl', [
     '$scope',
     'polls',
-    function ($scope, polls) {
+    'auth',
+    function ($scope, polls, auth) {
         $scope.polls = polls.polls;
+        var options = 2;
+            
+        $scope.pollOptions = [
+                    {option: $scope.ans1, votes: 0},
+                    {option: $scope.ans2, votes: 0}
+            ];
+        
+        
+        $scope.addMore = function() {
+            var ans = "ans"+options;
+            $scope.pollOptions.push({option: $scope.ans, votes: 0})
+            ans++;
+        }
         
         $scope.addPoll = function () {
+            console.log($scope);
             if (!$scope.question || $scope.question === '') {
                 $scope.error = "You didn't ask a question!";
                 return;
             }
-            if (!$scope.ans1 || !$scope.ans2 || $scope.ans1 === '' || $scope.ans2 === '') {
+            /*if (!$scope.ans1 || !$scope.ans2 || $scope.ans1 === '' || $scope.ans2 === '') {
                 $scope.error = 'One or more answers are blank.';
+                return;
+            }*/
+            
+            if(!auth.isLoggedIn()) {
+                $scope.error = 'You must be logged in!';
                 return;
             }
             
             polls.create({
                 question: $scope.question,
-                answers: [
-                    {option: $scope.ans1, votes: 0},
-                    {option: $scope.ans2, votes: 0}
-            ]});
+                answers: $scope.pollOptions
+            });
                 
             $scope.error = '';
         };
@@ -204,16 +255,27 @@ app.controller('thePollCtrl', [
     '$scope',
     'polls',
     'poll',
-    function ($scope, polls, poll) {
+    'auth',
+    function ($scope, polls, poll, auth) {
         $scope.poll = poll;
         $scope.answers = poll.answers;
+        $scope.boxNum = ['box0', 'box1', 'box2', 'box3', 'box4', 'box5', 'box6', 'box7', 'box8', 'box9']
+        
+        $scope.setClass = function(asd) {
+            $('div').removeClass('activeOption');
+            $('#box'+asd).addClass('activeOption');
+        }
         
         $scope.vote = function() {
+            
+            if(!auth.isLoggedIn()) {
+                $scope.error = 'You must be logged in!';
+                return;
+            }
+            
             var val = $scope.radioValue;
             
             polls.voteFor(poll, val);
-            
-            window.location.href = "#/polls/" + poll._id + "/results";
         }
     }
 ]);
@@ -251,6 +313,21 @@ app.controller('AuthCtrl', [
             });
         };
 }])
+
+app.controller('ProfileCtrl', [
+    '$scope',
+    'polls',
+    'auth',
+    function($scope, polls, auth){
+        $scope.currentUser = auth.currentUser();
+        $scope.polls = polls.polls;
+        
+        $scope.delete = function (poll) {
+            polls.delete(poll);
+            $scope.polls.splice($scope.polls.indexOf(poll),1);
+        }
+    }
+]);
 
 app.controller('NavCtrl', [
     '$scope',

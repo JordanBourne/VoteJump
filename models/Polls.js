@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 var PollSchema = new mongoose.Schema({
     question: String,
-    answers: [{option: String, votes: Number}]
+    author: String,
+    answers: [{option: String, votes: {type: Number, default: 0}}]
 });
 
 PollSchema.methods.upvote = function (vote, cb) {

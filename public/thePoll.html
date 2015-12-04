@@ -2,10 +2,13 @@
     <h2>{{poll.question}}</h2>
     <form ng-submit = "vote()" class = "voteBox">
         <div ng-repeat = "answer in answers">
-            <input type = "radio" name = "choice" ng-model = "$parent.radioValue" id = "{{$index}}" value = "{{$index}}" required>
-            <label for="{{$index}}"><span><span></span></span>{{answer.option}}</label>
+            <input ng-hide = "true" type = "radio" name = "polloption" ng-model = "$parent.radioValue" id = "{{$index}}" value = "{{$index}}" required>
+            <label for="{{$index}}"><div class = "thisOption" ng-click = "setClass($index)" id = "{{boxNum[$index]}}">{{answer.option}}</div></label>
         </div>
-        <input type = "submit" value = "Submit" id = "submitAnswer"></input><br>
+        <span style = "text-align: center">
+        <a href = "#/polls/{{poll._id}}/results"><div class = "smallOutline viewResults">View Results</div></a>
+        <input class = "smallOutline submitPoll" type = "submit" value = "Submit" id = "submitAnswer"></input>
+        </span>
     </form>
-    <a href = "#/polls/{{poll._id}}/results">View Results</a>
+    <div style = "color: red; width: 100%;">{{error}}</div>
 </div>

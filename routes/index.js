@@ -47,7 +47,6 @@ router.post('/login', function(req, res, next){
     })(req, res, next);
 });
 
-
 router.get('/polls', function (req, res, next) {
     Poll.find(function (err, polls) {
         if (err) { next(err) }
@@ -56,11 +55,21 @@ router.get('/polls', function (req, res, next) {
     });
 });
 
+router.get('/polls/author/:username', function (req, res, next) {
+    var username = req.params.username;
+    Poll.find({author: username}, function (err, polls) {
+        if (err) { next(err) }
+        
+        res.json(polls);
+    });
+});
+
 router.post('/polls', auth, function (req, res, next) {
     var poll = new Poll(req.body);
-    post.author = req.payload.username;
+    poll.author = req.payload.username;
     
     poll.save(function (err, poll) {
+        console.log(err);
         if (err) { return next(err) }
         
         res.json(poll);
@@ -88,6 +97,14 @@ router.put('/polls/:poll/:vote', auth, function(req, res, next) {
     req.poll.upvote(vote, function(err, poll) {
         if(err) { return next(err); }
         
+        res.json(poll);
+    });
+});
+
+router.delete('/polls/:poll', function(req, res, next) {
+    req.poll.remove(function(err, poll){
+        if (err) { return next(err); }
+
         res.json(poll);
     });
 });

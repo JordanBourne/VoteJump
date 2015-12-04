@@ -1,0 +1,12 @@
+<div class = "formContainer">
+    <h2>{{currentUser}}</h2>
+    <div class = "yourPolls">Your Polls</div>
+    <a ng-repeat = "poll in polls" href = "#/polls/{{poll._id}}"><div class = "thisOption">{{poll.question}}<div ng-click = "delete(poll)" class = "deletePoll">X</div></div></a>
+</div>
+<div class = "formSpacer"></div>
+
+ <!--       <div class = "yourPolls">Your Polls:</div>
+        <div ng-repeat = "poll in polls">
+        <div ng-click = "delete(poll)" class = "deletePoll">X</div>
+            <a href = "#/polls/{{poll._id}}">{{poll.question}}</a>
+        </div>-->
