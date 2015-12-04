@@ -1,6 +1,8 @@
 <div class = "formContainer">
     <h2>{{poll.question}}</h2>
-        <div ng-repeat = "answer in answers">
-            {{answer.option}}: {{answer.votes}}
-        </div>
+    <canvas id="pie" class="chart chart-pie"
+        chart-data="chartData" chart-labels="chartLabels">
+    </canvas> 
+    
+    
 </div>

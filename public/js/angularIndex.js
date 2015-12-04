@@ -1,4 +1,6 @@
-var app = angular.module('display', ['ui.router']);
+(function() {
+    
+    var app = angular.module('display', ['ui.router', 'chart.js']);
     
 app.config([
     '$stateProvider',
@@ -223,10 +225,6 @@ app.controller('NewPollCtrl', [
                 $scope.error = "You didn't ask a question!";
                 return;
             }
-            /*if (!$scope.ans1 || !$scope.ans2 || $scope.ans1 === '' || $scope.ans2 === '') {
-                $scope.error = 'One or more answers are blank.';
-                return;
-            }*/
             
             if(!auth.isLoggedIn()) {
                 $scope.error = 'You must be logged in!';
@@ -287,6 +285,12 @@ app.controller('resultsCtrl', [
     function ($scope, polls, poll) {
         $scope.poll = poll;
         $scope.answers = poll.answers;
+        $scope.chartLabels = [];
+        $scope.chartData = [];
+        for(var i = 0; i < poll.answers.length; i++) {
+            $scope.chartLabels.push(poll.answers[i].option);
+            $scope.chartData.push(poll.answers[i].votes);
+        }
     }
 ]);
 
@@ -338,3 +342,5 @@ app.controller('NavCtrl', [
         $scope.logOut = auth.logOut;
     }
 ]);
+}
+    )();
