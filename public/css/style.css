@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     padding: 0;
     margin: 0;
+    min-width: 500px;
 }
 
 div {
@@ -35,10 +36,16 @@ a:active {
 }
 
 .header {
-    width:100%;
-    background-color:#000;
+    width: 80%;
+    background-color: #414242;
     color:#fff;
     margin: 0;
+    margin: auto;
+    height: 60px;
+}
+
+.header a:hover {
+    text-decoration: underline;
 }
 
 .pageContainer {
@@ -50,6 +57,8 @@ a:active {
     font-size: 20px;
     padding-top: 10px;
     text-align: center;
+    float: left;
+    width: 100px;
 }
 
 .headButton {
@@ -59,23 +68,23 @@ a:active {
     font-size: 16px;
     text-align: center;
     padding-bottom: 10px;
+    float: right;
+    width: 100px;
 }
 
 .mainContent {
     background-color: #414242;
     margin: 0px;
     margin-bottom: 20px;
-}
-
-.clickMe {
-    cursor: pointer;
+    text-align: center;
 }
 
 .iGraph {
-    height: 150px;
+    height: 190px;
     display: block;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 0px;
+    z-index: 5;
 }
 
 .mainContent h1 {
@@ -119,6 +128,12 @@ a:active {
     padding-top: 4px;
 }
 
+.voteButton:hover {
+    background-color: white;
+    color: #414242;
+    transition: all 0.3s ease;
+}
+
 .buttonContainer {
     width: 100%;
     margin: 0px;
@@ -145,6 +160,7 @@ a:active {
 .formContainer a:hover {
     padding-top: 20px;
     color: blue;
+    transition: all 0.3s ease;
 }
 
 .formContainer h2 {
@@ -233,12 +249,29 @@ a:active {
     width: 280px !important;
     margin: auto;
     margin: 2px;
-    font-size: 20px;
+    font-size: 18px;
     border: 1px solid #777777;
 }
+
 .thisOption:hover {
     border-color: #FF8300;
     color: #FF8300;
+    transition: all 0.3s ease;
+}
+
+.thisOption:hover a {
+    border-color: #FF8300;
+    color: #FF8300;
+    transition: all 0.3s ease;
+}
+
+.fillBox {
+    height: 100%;
+    width: 100%;
+}
+
+.padRight {
+    margin-right: 35px;
 }
 
 .activeOption {
@@ -262,31 +295,34 @@ a:active {
 }
 
 .moreOptions {
-    background-color: #3E66BC;
-    border: 1px solid #3E66BC;
+    background-color: #4977C4;
+    border: 1px solid #4977C4;
 }
 
 .submitPoll {
-    background-color: #3AD14D;
-    border: 1px solid #3AD14D;
+    background-color: #61E247;
+    border: 1px solid #61E247;
 }
 
 .moreOptions:hover {
     color: #3E66BC;
     background-color: white;
+    transition: all 0.3s ease;
 }
 
 .submitPoll:hover {
     color: #3AD14D;
     background-color: white;
+    transition: all 0.3s ease;
 }
 
 .viewResults {
-    background-color: #FF8300;
-    border: 1px solid #FF8300;
+    background-color: #FF974F;
+    border: 1px solid #FF974F;
 }
 
 .viewResults:hover {
     color: #FF8300;
     background-color: white;
+    transition: all 0.3s ease;
 }
